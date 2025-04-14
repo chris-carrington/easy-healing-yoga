@@ -9,10 +9,10 @@ import { FE } from './fe'
 import type { Layout } from './layout'
 import { Route as FunRoute } from './route'
 import { MetaProvider } from '@solidjs/meta'
-import { useContext, Suspense, JSX } from 'solid-js'
 import { FileRoutes } from '@solidjs/start/router'
 import { FE_Context, FE_ContextProvider } from './feContext'
 import { Route, Router, type RouteSectionProps } from '@solidjs/router'
+import { useContext, Suspense, ErrorBoundary, type JSX } from 'solid-js'
 
 
 import route_1 from '../../src/app/Index'
@@ -28,6 +28,7 @@ export const routes = {
  * - The primary reason to pass your own root is if you'd love additional context providers
  * - As seen @ `InternalRouterRoot` and below, root children must be wrapped around `<Suspense>`, `<MetaProvider>` and `<FE_ContextProvider>`
  * - After `<FE_ContextProvider>` please feel free to continue wrapping
+ * - `<ErrorBoundary /> ` is optional
  * - Simple example `app.tsx`:
         ```tsx
         import { App } from '@solidfun/app'
@@ -46,11 +47,13 @@ export const routes = {
         const root: RouterRoot = (props: RouteSectionProps) => {
             return <>
                 <AdditionalProvider>
-                    <FE_ContextProvider>
-                        <MetaProvider>
-                            <Suspense>{props.children}</Suspense>
-                        </MetaProvider>
-                    </FE_ContextProvider>
+                    <ErrorBoundary fallback={errorBoundaryFallback}>
+                        <FE_ContextProvider>
+                            <MetaProvider>
+                                <Suspense>{props.children}</Suspense>
+                            </MetaProvider>
+                        </FE_ContextProvider>
+                    </ErrorBoundary>
                 </AdditionalProvider>
             </> 
         }
@@ -71,13 +74,15 @@ export type RouterRoot = (props: RouteSectionProps) => JSX.Element
 
 export const InternalRouterRoot: RouterRoot = (props: RouteSectionProps) => {
   return <>
-    <FE_ContextProvider>
-      <MetaProvider>
-        <Suspense>
-          {props.children}
-        </Suspense>
-      </MetaProvider>
-    </FE_ContextProvider>
+    <ErrorBoundary fallback={errorBoundaryFallback}>
+      <FE_ContextProvider>
+        <MetaProvider>
+          <Suspense>
+            {props.children}
+          </Suspense>
+        </MetaProvider>
+      </FE_ContextProvider>
+    </ErrorBoundary>
   </> 
 }
 
@@ -108,3 +113,13 @@ function rc(props: RouteSectionProps, route: FunRoute | Layout) {
  *     - `children`
  */
 export type RouteComponentArgs<T = unknown> = RouteSectionProps<T> & { fe: FE }
+
+
+function errorBoundaryFallback(error: any, reset: () => void) {
+  return <>
+    <div>
+      <p>{error.message}</p>
+      <button onClick={reset}>Try Again</button>
+    </div>
+  </>
+} 

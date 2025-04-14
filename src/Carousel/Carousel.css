@@ -1,0 +1,92 @@
+.carousel {
+  overflow: hidden;
+  margin: 0 auto var(--section-space) auto;
+  transition: all 0.3s;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+
+  .loops {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 6s linear infinite;
+    &:hover {
+      animation-play-state: paused;
+    }
+  }
+
+  .loop {
+    display: flex;
+    white-space: normal;
+  }
+}
+
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    /* Atleast two copies of the items exist in a row, example: [loop 1] [loop 2] */
+    /* -50% shift means: slide from the beginning of the strip to the midpoint */
+    /*  So when the animation reaches 50%, it jumps back to 0 & b/c both halves are identical, this appears seamless */
+    transform: translateX(-50%);
+    
+  }
+}
+
+.carousel {
+  width: 1200px;
+  position: relative;
+  z-index: var(--zindex-carousel);
+
+  .loops {
+    animation-duration: 21s;
+
+    .offering {
+      text-align: center;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      background-color: white;
+      width: 36rem;
+      margin-left: 3rem;
+    
+      .img {
+        height: 30rem;
+        display: flex;
+        overflow: hidden;
+        justify-content: center;
+        position: relative;
+    
+        img {
+          height: 100%;
+        }
+
+        .svg_lotus {
+          position: absolute;
+          bottom: -1.5rem;
+          left: 50%;
+          margin-left: -3rem;
+          color: white;
+          width: 6rem;
+          height: 6rem;
+        }
+      }
+    
+      .title {
+        font-size: 2.4rem;
+        margin: 2.1rem 0 1.5rem 0;
+        font-weight: 600;
+        font-family: "Quicksand", sans-serif;
+      }
+    
+      .description {
+        margin-bottom: 2.1rem;
+        padding: 0 2.1rem;
+      }
+    
+      .btn {
+        margin-bottom: 2.1rem;
+      }
+    }
+  }
+}
