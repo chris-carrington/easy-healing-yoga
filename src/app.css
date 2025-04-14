@@ -1,0 +1,166 @@
+:root {
+  --zindex-nav-mobile: 8;
+  --zindex-nav-underline: 7;
+  --zindex-nav: 6;
+  --zindex-carousel: 5;
+  --zindex-banner-text: 4;
+  --zindex-banner-mask: 3;
+  --zindex-banner-wrapper: 2;
+  --zindex-banner-flower: 1;
+
+  --section-space: 5.4rem;
+
+  --primary-color: rgb(81 161 216);
+
+  --text-color: rgb(74, 64, 60);
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  font-size: 62.5%; /* https://stackoverflow.com/questions/59920538 */
+}
+
+body {
+  font-size: 1.8rem;
+  line-height: 1.369;
+  color: var(--text-color);
+  background-color: #f6f8f9;
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+.fln__circle-load {
+  width: 30px;
+  aspect-ratio: 1/1;
+  border-width: 0.27rem;
+  border-style: solid;
+  border-radius: 100%;
+  animation: fln__circle-load__spin 0.8s infinite linear;
+}
+
+.fln__pr-text {
+  padding-right: 0.45rem;
+}
+
+.fln__clear {
+  clear: both;
+}
+
+.fln__relative {
+  position: relative;
+}
+
+.fln__strong {
+  font-weight: 600;
+}
+
+@keyframes fln__circle-load__spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes fln__fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fln__fade-in-from-above {
+  0% {
+    opacity: 0;
+    transform: translateY(-9rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fln__fade-out-and-slide-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-9rem);
+  }
+}
+
+@keyframes fln__subtle-fade-in-from-above {
+  0% {
+    opacity: 0;
+    transform: translateY(-0.9rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fln__subtle-fade-out-and-slide-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-0.9rem);
+  }
+}
+
+
+
+.btn {
+  font-size: 1.8rem;
+  padding: 0.9rem 2.1rem;
+  display: inline-block;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: var(--primary-color);
+  border-radius: 0.6rem;
+  cursor: pointer;
+  &.lg {
+    font-size: 2.1rem;
+    padding: 1.5rem 4.5rem;
+  }
+  &.white {
+    background-color: white;
+    color: rgb(74, 64, 60);
+  }
+}
+
+.bg {
+  background-color: #6680AF;
+  background-image: linear-gradient(to bottom right, #A1B4D5 0%, #6680AF 100%);
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('Quicksand.ttf') format('truetype');
+  font-weight: 100 900; /* Adjust according to the font's weights */
+  font-style: normal;
+}
