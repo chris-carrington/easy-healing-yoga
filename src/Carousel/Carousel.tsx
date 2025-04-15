@@ -4,10 +4,12 @@ import { For } from 'solid-js'
 import smile from './smile.jpg'
 import water from './water.png'
 import buddhas from './buddhas.jpg'
+import '@solidfun/carousel.styles.css'
 import referrals from './referrals.jpg'
 import goldBuddha from './goldBuddha.jpg'
 import redFlowers from './redFlowers.jpg'
 import { svg_lotus } from '@src/lib/svgs'
+import { loremWords } from '@solidfun/lorem'
 import mountainTour from './mountainTour.jpg'
 import { Carousel as FunCarousel } from '@solidfun/carousel'
 
@@ -23,7 +25,7 @@ export function Carousel()  {
               {svg_lotus()}
             </div>
             <div class="title">{o.title}</div>
-            <div class="description">{o.description}</div>
+            <div innerHTML={o.description} class="description"></div>
             <button class="btn">Learn More</button>
           </div>
         </>
@@ -33,53 +35,48 @@ export function Carousel()  {
 }
 
 
-function lorem() {
-  return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-}
-
-
 const offerings = [
   {
     key: 1,
     src: mountainTour,
     title: 'Healing Tours',
-    description: lorem(),
+    description: loremWords(57),
   },
   {
     key: 3,
     src: water,
     title: 'Aquatic Therapy',
-    description: lorem(),
+    description: loremWords(57),
   },
   {
     key: 2,
     src: smile,
     title: 'Yoga Therapy',
-    description: lorem(),
+    description: loremWords(57),
   },
   {
     key: 4,
     src: man,
     title: 'Physical Healing Counseling',
-    description: lorem(),
+    description: loremWords(57),
   },
   {
     key: 5,
     src: goldBuddha,
     title: 'Energy Medicine',
-    description: lorem(),
+    description: loremWords(57),
   },
   {
     key: 6,
     src: redFlowers,
     title: 'Ayurvedic Herbs & Foods',
-    description: lorem(),
+    description: loremWords(57),
   },
   {
     key: 7,
     src: buddhas,
     title: 'Healing Touch',
-    description: lorem(),
+    description: loremWords(57),
   },
   {
     key: 8,
