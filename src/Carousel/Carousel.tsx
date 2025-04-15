@@ -8,13 +8,13 @@ import referrals from './referrals.jpg'
 import goldBuddha from './goldBuddha.jpg'
 import redFlowers from './redFlowers.jpg'
 import { svg_lotus } from '@src/lib/svgs'
-import { Carousel } from '@solidfun/carousel'
 import mountainTour from './mountainTour.jpg'
+import { Carousel as FunCarousel } from '@solidfun/carousel'
 
 
-export default () => {
+export function Carousel()  {
   return <>
-    <Carousel items={
+    <FunCarousel items={
       <For each={offerings}>{
         (o) => <>
           <div class="offering">

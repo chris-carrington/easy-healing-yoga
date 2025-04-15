@@ -3,7 +3,7 @@ import flower from './flower.jpg'
 import banner from './banner.jpg'
 
 
-export default () => {
+export function Banner () {
   return <>
     <div class="banner">
       <div class="img">

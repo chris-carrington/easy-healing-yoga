@@ -1,0 +1,38 @@
+.about {
+  width: 97%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: all 0.3s;
+  border-radius: 3rem;
+  padding: 2.1rem 3rem 2.7rem 3rem;
+  margin: 0 auto 5.4rem auto;
+
+  @media only screen and (min-width: 1660px) {
+    padding: 3rem 9rem;
+  }
+
+  .svg_lotus {
+    color: rgba(255, 255, 255, 0.5);
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+
+  .title, .description {
+    color: #fff;
+  }
+
+  .title {
+    font-weight: 500;
+    font-size: 4.5rem;
+    text-align: center;
+    font-family: "Quicksand", sans-serif;
+  }
+
+  .description {
+    font-family: serif;
+    text-align: justify;
+    font-size: 1.91rem;
+  }
+}

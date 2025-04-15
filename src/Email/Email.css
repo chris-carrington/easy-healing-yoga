@@ -1,0 +1,50 @@
+.email {
+  width: 100%;
+  padding: 3rem;
+  transition: all 0.3s;
+  text-align: center;
+  margin-bottom: var(--section-space);
+
+  @media only screen and (min-width: 777px) {
+    padding: 9rem;
+  }
+
+  .title {
+    font-weight: 500;
+    font-size: 3.6rem;
+    color: white;
+    font-family: "Quicksand", sans-serif;
+    margin-bottom: 1.5rem;
+  }
+
+  .form {
+
+    input {
+      color: white;
+      outline: none;
+      border-radius: 0.6rem;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.22);
+      padding: 1.5rem;
+      width: 100%;
+      margin-bottom: 1.8rem;
+      transition: all 0.3s;
+      font-size: 2.1rem;
+      display: inline-block;
+      margin-right: 0.9rem;
+      &::placeholder {
+        color: white;
+      }
+
+      @media only screen and (min-width: 777px) {
+        width: 47.1rem;
+        margin-bottom: 0;
+      }
+    }
+
+    button {
+      font-size: 2.1rem;
+      padding: 1.5rem;
+    }
+  }
+}

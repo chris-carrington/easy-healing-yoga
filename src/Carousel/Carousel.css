@@ -40,7 +40,7 @@
   z-index: var(--zindex-carousel);
 
   .loops {
-    animation-duration: 21s;
+    animation-duration: 45s;
 
     .offering {
       text-align: center;

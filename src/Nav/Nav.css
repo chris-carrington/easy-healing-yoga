@@ -24,7 +24,7 @@
     transition: all 0.3s;
     &:hover {
 
-      :global(.svg__menu) {
+      .svg_menu {
         color: var(--primary-color);
       }
     }
@@ -77,12 +77,12 @@
       cursor: pointer;
       background-color: transparent;
       &:hover {
-        :global(.svg__close) {
+        .svg_close {
           color: var(--primary-color);
         }
       }
 
-      :global(.svg__close) {
+      .svg_close {
         width: 4.5rem;
         height: 4.5rem;
       }

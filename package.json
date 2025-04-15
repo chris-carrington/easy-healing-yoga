@@ -1,5 +1,5 @@
 {
-  "name": "example-basic",
+  "name": "easy-healing-yoga",
   "type": "module",
   "scripts": {
     "dev": "fun build local && vinxi dev",

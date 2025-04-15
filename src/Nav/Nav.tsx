@@ -5,7 +5,7 @@ import { svg_menu, svg_close } from '@src/lib/svgs'
 
 export default () => {
   let underline: HTMLDivElement | undefined  = undefined
-  const [_, setIsMobileNavVisible] = createSignal(false)
+  const [isMobileNavVisible, setIsMobileNavVisible] = createSignal(false)
 
   let navItems = [
     {
@@ -67,31 +67,30 @@ export default () => {
   }
 
   return <>
-  
-  <div class="nav">
-    <img src={ logo }  alt="logo" />
-    <nav class="top">
-      <For each={navItems}>{
-        (item) => <a href={ item.href } onmouseenter={ () => linkMouseEnter(item.id) } onmouseleave={ () => linkMouseLeave() } class={ isActive(item.id) ? 'active' : '' }>{ item.name }</a>
-      }</For>
-      <div ref={ underline } class="underline one"></div>
-    </nav>
-
-    <nav class="mobile { isMobileNavVisible === true ? 'visible' : '' }">
-      <button class="close" onclick={ () => setIsMobileNavVisible(v => !v) }>
-        {svg_close()}
-      </button>
-
+    <div class="nav">
       <img src={ logo }  alt="logo" />
+      <nav class="top">
+        <For each={navItems}>{
+          (item) => <a href={ item.href } onmouseenter={ () => linkMouseEnter(item.id) } onmouseleave={ () => linkMouseLeave() } class={ isActive(item.id) ? 'active' : '' }>{ item.name }</a>
+        }</For>
+        <div ref={ underline } class="underline one"></div>
+      </nav>
 
-      <For each={navItems}>{
-        (item) => <a href={ item.href }>{ item.name }</a>
-      }</For>
-    </nav>
+      <nav classList={{mobile: true, visible: isMobileNavVisible()}}>
+        <button class="close" onclick={ () => setIsMobileNavVisible(v => !v) }>
+          {svg_close()}
+        </button>
 
-    <button class="menu" onclick={ () => setIsMobileNavVisible(v => !v) }>
-      {svg_menu()}
-    </button>
-  </div>
+        <img src={ logo }  alt="logo" />
+
+        <For each={navItems}>{
+          (item) => <a href={ item.href }>{ item.name }</a>
+        }</For>
+      </nav>
+
+      <button class="menu" onclick={ () => setIsMobileNavVisible(v => !v) }>
+        {svg_menu()}
+      </button>
+    </div>
   </>
 }
