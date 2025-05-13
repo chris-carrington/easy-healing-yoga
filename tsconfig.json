@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
@@ -14,8 +15,12 @@
     "isolatedModules": true,
     "paths": {
       "@src/*": ["./src/*"],
-      "fun.config": ["./fun.config.js"],
-      "@solidfun/*": ["./.solidfun/fundamentals/*"]
+      "ace.config": ["ace.config.js"],
+      "@ace/*": ["./.ace/fundamentals/*"],
     }
-  }
+  },
+  "include": [
+    "src/**/*",
+    ".ace/**/*"
+  ]
 }

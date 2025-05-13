@@ -2,24 +2,23 @@
   "name": "easy-healing-yoga",
   "type": "module",
   "scripts": {
-    "dev": "fun build local && vinxi dev",
+    "dev": "ace build local && vinxi dev",
     "build": "vinxi build",
     "start": "vinxi start",
-    "version": "vinxi version",
-    "deploy": "fun build prod"
-  },
-  "dependencies": {
-    "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.15.0",
-    "@solidjs/start": "^1.1.0",
-    "solid-js": "^1.9.5",
-    "solidfun": "^0.0.23",
-    "vinxi": "^0.5.3"
+    "version": "vinxi version"
   },
   "engines": {
     "node": ">=22"
   },
   "devDependencies": {
-    "@types/node": "^22.14.1"
+    "@acets-team/ace": "^0.0.10",
+    "@libsql/client": "^0.15.5",
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.15.0",
+    "@solidjs/start": "^1.1.0",
+    "@types/node": "^22.14.1",
+    "solid-js": "^1.9.5",
+    "valibot": "^1.1.0",
+    "vinxi": "^0.5.3"
   }
 }

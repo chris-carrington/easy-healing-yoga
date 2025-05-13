@@ -1,4 +1,4 @@
-import './app.css' // vite css relative paths = best
-import { App } from '@solidfun/app'
+import './app.css'
+import { createApp } from '@ace/createApp'
 
-export default () => <App />
+export default createApp()

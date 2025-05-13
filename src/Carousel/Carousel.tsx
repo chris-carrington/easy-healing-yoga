@@ -1,17 +1,17 @@
 import './Carousel.css'
 import man from './man.jpg'
+import '@ace/carousel.styles'
 import { For } from 'solid-js'
 import smile from './smile.jpg'
 import water from './water.png'
 import buddhas from './buddhas.jpg'
-import '@solidfun/carousel.styles.css'
 import referrals from './referrals.jpg'
+import { loremWords } from '@ace/lorem'
 import goldBuddha from './goldBuddha.jpg'
 import redFlowers from './redFlowers.jpg'
 import { svg_lotus } from '@src/lib/svgs'
-import { loremWords } from '@solidfun/lorem'
 import mountainTour from './mountainTour.jpg'
-import { Carousel as FunCarousel } from '@solidfun/carousel'
+import { Carousel as FunCarousel } from '@ace/carousel'
 
 
 export function Carousel()  {
