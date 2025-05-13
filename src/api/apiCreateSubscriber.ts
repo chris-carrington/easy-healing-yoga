@@ -8,7 +8,7 @@ export const POST = new API('/api/create-subscriber', 'apiCreateSubscriber')
   .resolve(async (be) => {
     const body = createSubscriberSchema.parse(await be.getBody())
 
-    await db.execute({ sql: 'INSERT INTO subscribers VALUES (:email)', args: body })
+    await db().execute({ sql: 'INSERT INTO subscribers VALUES (:email)', args: body })
 
     return be.json({ success: true })
   })
