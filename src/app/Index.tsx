@@ -12,7 +12,7 @@ import { Carousel } from '@src/Carousel/Carousel'
 export default new Route('/')
   .component(() => {
     async function onClick() {
-      await apiCreateSubscriber({body: {email: 'wes@gmail.com'}})
+      await apiCreateSubscriber({body: {email: 'donna@gmail.com'}})
     }
 
     return <>

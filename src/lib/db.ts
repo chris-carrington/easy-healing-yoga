@@ -1,11 +1,12 @@
+import { env } from 'node:process'
 import { createClient } from '@libsql/client'
 
 
-if (!process.env.TURSO_AUTH_TOKEN) throw new Error('!process.env.TURSO_AUTH_TOKEN')
-if (!process.env.TURSO_DATABASE_URL) throw new Error('!process.env.TURSO_DATABASE_URL')
+if (!env.TURSO_AUTH_TOKEN) throw new Error('!process.env.TURSO_AUTH_TOKEN')
+if (!env.TURSO_DATABASE_URL) throw new Error('!process.env.TURSO_DATABASE_URL')
 
 
 export const db = createClient({
-  url: process.env.TURSO_DATABASE_URL,
-  authToken: process.env.TURSO_AUTH_TOKEN,
+  url: env.TURSO_DATABASE_URL,
+  authToken: env.TURSO_AUTH_TOKEN,
 })
