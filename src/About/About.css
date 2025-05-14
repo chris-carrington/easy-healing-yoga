@@ -27,12 +27,12 @@
     font-weight: 500;
     font-size: 4.5rem;
     text-align: center;
-    font-family: "Quicksand", sans-serif;
   }
 
   .description {
     font-family: serif;
     text-align: justify;
     font-size: 1.91rem;
+    font-family: var(--font-family-times);
   }
 }

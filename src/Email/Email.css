@@ -3,6 +3,7 @@
   padding: 3rem;
   transition: all 0.3s;
   text-align: center;
+  position: relative;
   margin-bottom: var(--section-space);
 
   @media only screen and (min-width: 777px) {
@@ -13,11 +14,18 @@
     font-weight: 500;
     font-size: 3.6rem;
     color: white;
-    font-family: "Quicksand", sans-serif;
     margin-bottom: 1.5rem;
   }
 
-  .form {
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    input,
+    button {
+      height: 5.4rem;
+    }
 
     input {
       color: white;
@@ -44,7 +52,32 @@
 
     button {
       font-size: 2.1rem;
-      padding: 1.5rem;
+      width: 10.5rem;
+      white-space: nowrap;
+      padding: 0;
+
+      .load-spin {
+        border-top-color: #7c93be;
+      }
+    }
+  }
+
+  .fun_messages {
+    bottom: 5.1rem;
+    position: absolute;
+    left: 50%;
+    width: 27rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: -13.5rem;
+
+    button {
+      border-radius: 50%;
+      border: none;
+      height: 2.1rem;
+      width: 2.1rem;
+      cursor: pointer;
     }
   }
 }
