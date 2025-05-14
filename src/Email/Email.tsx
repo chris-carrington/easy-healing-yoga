@@ -16,7 +16,7 @@ export function Email() {
 
   return <>
     <div class="email bg">
-      <div class="title">Keep up-to-date with Easy Healing Yoga</div>
+      <div class="title">Keep up-to-date with Health & Wellness Adventure Retreats</div>
       <form onSubmit={onSubmit}>
         <input name="email" type="email" placeholder="Please enter email address" />
         <Submit label="Sign Up" class="btn white" bitKey="save" />

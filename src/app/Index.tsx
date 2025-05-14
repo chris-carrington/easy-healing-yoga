@@ -6,6 +6,7 @@ import { Banner } from '@src/Banner/Banner'
 import { Footer } from '@src/Footer/Footer'
 import { Meta, Title } from '@solidjs/meta'
 import { Carousel } from '@src/Carousel/Carousel'
+import { Upcoming } from '@src/Upcoming/Upcoming'
 
 
 export default new Route('/')
@@ -21,6 +22,7 @@ export default new Route('/')
       <Banner />
       <Carousel />
       <About />
+      <Upcoming />
       <Email />
       <Footer />
     </>

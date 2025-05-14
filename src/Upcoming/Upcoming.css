@@ -1,0 +1,110 @@
+.upcoming {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-1rem); /* Make up for lotus space */
+  margin: 0 2.1rem var(--section-space) 2.1rem;
+
+  .svg_lotus {
+    width: 6rem;
+    height: 6rem;
+    color: rgb(173, 227, 247);
+  }
+
+  .title {
+    font-weight: 600;
+    font-family: "Quicksand", sans-serif;
+    font-size: 3.6rem;
+    margin-bottom: 1.8rem;
+    color: rgb(74, 64, 60);
+    text-align: center;
+  }
+
+  .event {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3rem;
+    margin-bottom: 2.7rem;
+    box-shadow: rgba(102, 128, 175, 0.24) 0px 0px 54.886px 0px;
+
+    @media only screen and (min-width: 777px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .img-left {
+      /* width: 97vw;
+      height: 27rem; */
+      overflow: hidden;
+      display: none;
+
+      @media only screen and (min-width: 1380px) { /* big screen */
+        /* width: 27rem; */
+        display: block;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .images {
+      transform: translateY(21px);
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      @media only screen and (min-width: 1380px) { /* big screen */
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      img {
+        height: 21rem;
+        &#tepotzlan_bowls {
+          display: block;
+
+          @media only screen and (min-width: 1380px) { /* big screen */
+            display: none;
+          }
+        }
+      }
+    }
+
+    .img-right {
+      height: 27rem;
+
+      img {
+        height: 100%;
+      }
+    }
+
+    .content {
+      flex: 1;
+      padding: 3rem;
+      background-color: white;
+
+      @media only screen and (min-width: 777px) {
+        padding: 6rem 3rem;
+      }
+
+      .time {
+        color: var(--primary-color);
+        font-family: serif;
+      }
+
+      .primary {
+        font-family: "Quicksand", sans-serif;
+        font-weight: 600;
+        font-size: 2.4rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .secondary {
+        font-family: serif;
+      }
+    }
+  }
+}

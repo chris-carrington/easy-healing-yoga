@@ -31,7 +31,7 @@
     z-index: var(--zindex-banner-text);
     color: white;
     font-weight: 500;
-    width: 74rem;
+    width: 86rem;
     transition: all 0.3s;
 
     @media only screen and (max-width: 1280px) {
@@ -69,7 +69,7 @@
     }
 
     .secondary {
-      font-size: 2.3rem;
+      font-size: 2.7rem;
       margin: 1.5rem 0 2.7rem 0;
       transition: all 0.3s;
 
