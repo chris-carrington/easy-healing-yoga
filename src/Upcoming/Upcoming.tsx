@@ -8,7 +8,7 @@ import tepotzlan_fireplace from './tepotzlan_fireplace.jpg'
 
 export function Upcoming() {
   return <>
-    <div class="upcoming">
+    <div id="upcoming">
       {svg_lotus()}
       <div class="title">Upcoming Spiritual Retreats</div>
       <div class="event">
@@ -28,9 +28,8 @@ export function Upcoming() {
             <img src={ tepotzlan_fireplace } alt="tepotzlan_fireplace" />
           </div>
         </div>
-
       </div>
-      <button class="btn lg" type="button">See All Spiritual Retreats</button>
+      {/* <button class="btn lg" type="button">See All Spiritual Retreats</button> */}
     </div>
   </>
 }

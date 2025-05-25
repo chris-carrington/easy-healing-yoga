@@ -5,7 +5,7 @@ import { svg_lotus } from '@src/lib/svgs'
 
 export function About () {
   return <>
-    <div class="about bg">
+    <div id="bio" class="about bg">
       {svg_lotus()}
       <div class="title">Your Practice Begins Here with Easy Healing Yoga</div>
 
@@ -20,8 +20,6 @@ export function About () {
           <p>Namaste! Enjoy!</p>
         </div>
       </div>
-
-      <button class="btn white" type="button">More About Us</button>
     </div>
   </>
 }

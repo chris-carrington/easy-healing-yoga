@@ -1,4 +1,5 @@
 import './app.css'
+import '@ace/tabs.styles'
 import '@ace/toast.styles'
 import '@ace/loadSpin.styles'
 import { Suspense } from 'solid-js'

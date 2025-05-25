@@ -1,13 +1,13 @@
 :root {
-  --zindex-toast: 9;
-  --zindex-nav-mobile: 8;
-  --zindex-nav-underline: 7;
-  --zindex-nav: 6;
-  --zindex-carousel: 5;
-  --zindex-banner-text: 4;
-  --zindex-banner-mask: 3;
-  --zindex-banner-wrapper: 2;
-  --zindex-banner-flower: 1;
+  --z-toast: 9;
+  --z-nav-mobile: 8;
+  --z-nav-marker: 7;
+  --z-nav: 6;
+  --z-carousel: 5;
+  --z-banner-text: 4;
+  --z-banner-mask: 3;
+  --z-banner-wrapper: 2;
+  --z-banner-flower: 1;
 
   --section-space: 5.4rem;
 
@@ -16,7 +16,7 @@
   --text-color: rgb(74, 64, 60);
 
   --font-family: "Quicksand", sans-serif;
-  --font-family-times: "Times New Roman", Times, serif;
+  --font-family-serif: serif;
 }
 
 body,
@@ -69,7 +69,7 @@ body * {
 }
 
 #ace-toast-wrapper {
-  z-index: var(--zindex-toast);
+  z-index: var(--z-toast);
 }
 
 @keyframes fln__circle-load__spin {

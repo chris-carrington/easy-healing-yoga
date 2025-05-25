@@ -11,26 +11,28 @@ import goldBuddha from './goldBuddha.jpg'
 import redFlowers from './redFlowers.jpg'
 import { svg_lotus } from '@src/lib/svgs'
 import mountainTour from './mountainTour.jpg'
-import { Carousel as FunCarousel } from '@ace/carousel'
+import { Carousel as AceCarousel } from '@ace/carousel'
 
 
 export function Carousel()  {
   return <>
-    <FunCarousel items={
-      <For each={offerings}>{
-        (o) => <>
-          <div class="offering">
-            <div class="img">
-              <img src={o.src} alt={o.title} />
-              {svg_lotus()}
+    <div id="carousel">
+      <AceCarousel items={
+        <For each={offerings}>{
+          (o) => <>
+            <div class="offering">
+              <div class="img">
+                <img src={o.src} alt={o.title} />
+                {svg_lotus()}
+              </div>
+              <div class="title">{o.title}</div>
+              <div innerHTML={o.description} class="description"></div>
+              {/* <button class="btn">Learn More</button> */}
             </div>
-            <div class="title">{o.title}</div>
-            <div innerHTML={o.description} class="description"></div>
-            <button class="btn">Learn More</button>
-          </div>
-        </>
-      }</For>
-    }/>
+          </>
+        }</For>
+      }/>
+    </div>
   </>
 }
 

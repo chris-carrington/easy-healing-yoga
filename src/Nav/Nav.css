@@ -1,15 +1,21 @@
 .nav {
   position: fixed;
-  z-index: var(--zindex-nav);
+  z-index: var(--z-nav);
   top: 0;
   left: 0;
   right: 0;
   background-color: white;
-  padding: 0.6rem 1.5rem;
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px 0px;
+
+  .logo-btn {
+    border: none;
+    cursor: pointer;
+    background: transparent;
+  }
 
   .menu {
     cursor: pointer;
@@ -40,7 +46,7 @@
     left: 0;
     right: 0;
     height: 0;
-    z-index: var(--zindex-nav-mobile);
+    z-index: var(--z-nav-mobile);
     background-color: white;
     overflow: hidden;
     transition: all 0.3s;
@@ -57,6 +63,11 @@
     img {
       width: 27rem;
       margin-bottom: 1.2rem;
+    }
+
+    li {
+      display: block;
+      text-align: center;
     }
 
     a {
@@ -96,23 +107,18 @@
       display: none;
     }
 
-    a {
-      position:relative;
-      z-index: var(--zindex-nav);
+    .tab {
       font-size: 2.1rem;
       text-decoration: none;
       font-weight: 500;
-      padding: 2.7rem 1.2rem;
+      padding: 2.1rem 1.2rem;
       cursor: pointer;
-      &.active {
-        color: var(--primary-color);
-      }
+      color: var(--text-color);
     }
 
-    .underline {
-      position: absolute;
-      z-index: var(--zindex-nav-underline);
-      bottom: -2.76rem;
+    .marker {
+      z-index: var(--z-nav-marker);
+      top: calc(100% - 0.9rem);
       left: 0;
       width: 8.3rem;
       height: 0.9rem;

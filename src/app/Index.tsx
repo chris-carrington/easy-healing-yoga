@@ -12,8 +12,8 @@ import { Upcoming } from '@src/Upcoming/Upcoming'
 export default new Route('/')
   .component(() => {
     return <>
-      <Title>Easy Healing Yoga</Title>
-      <Meta property="og:title" content="Easy Healing Yoga" />
+      <Title>Health & Wellness Adventure Retreats</Title>
+      <Meta property="og:title" content="Health & Wellness Adventure Retreats" />
       <Meta property="og:url" content="http://easy-healing-yoga.jquery-ssr.workers.dev" />
       <Meta property="og:image" content="http://easy-healing-yoga.jquery-ssr.workers.dev/ogIndex.webp" />
       <Meta name="description" content="Your Practice Begins Here with Easy Healing Yoga - Sacred Relaxing Retreats to Peru, Bolivia, Lake Titicaca, and Nicaragua" />

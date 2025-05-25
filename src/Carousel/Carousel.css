@@ -1,7 +1,7 @@
-.carousel {
+#carousel {
   width: 1200px;
   position: relative;
-  z-index: var(--zindex-carousel);
+  z-index: var(--z-carousel);
   margin: 0 auto var(--section-space) auto;
 
   .loops {
@@ -46,7 +46,7 @@
       .description {
         margin-bottom: 2.1rem;
         padding: 0 2.1rem;
-        font-family: var(--font-family-times);
+        font-family: var(--font-family-serif);
       }
     
       .btn {

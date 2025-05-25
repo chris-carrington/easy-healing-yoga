@@ -1,15 +1,15 @@
-.banner {
-  margin: 7.4rem 0 var(--section-space) 0;
+#banner {
+  margin: 7rem 0 var(--section-space) 0;
   position: relative;
   overflow: visible;
-  z-index: var(--zindex-banner-wrapper);
+  z-index: var(--z-banner-wrapper);
 
   .img {
     width: 100vw;
     &:before {
       content: '';
       position: absolute;
-      z-index: var(--zindex-banner-mask);
+      z-index: var(--z-banner-mask);
       top: 0;
       left: 0;
       width: 100%;
@@ -28,7 +28,7 @@
     position: absolute;
     top: 50%;
     transform: translate(14rem, -50%);
-    z-index: var(--zindex-banner-text);
+    z-index: var(--z-banner-text);
     color: white;
     font-weight: 500;
     width: 86rem;
@@ -85,7 +85,7 @@
 
   .flower {
     position: absolute;
-    z-index: var(--zindex-banner-flower);
+    z-index: var(--z-banner-flower);
     bottom: 0;
     left: 0;
     transform: translate(3rem, 44rem);

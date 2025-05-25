@@ -15,7 +15,7 @@ export function Email() {
   })
 
   return <>
-    <div class="email bg">
+    <div id="newsletter" class="bg">
       <div class="title">Keep up-to-date with Health & Wellness Adventure Retreats</div>
       <form onSubmit={onSubmit}>
         <input name="email" type="email" placeholder="Please enter email address" />
