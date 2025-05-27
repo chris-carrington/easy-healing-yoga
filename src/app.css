@@ -43,104 +43,9 @@ body * {
   box-sizing: border-box;
 }
 
-.fln__circle-load {
-  width: 30px;
-  aspect-ratio: 1/1;
-  border-width: 0.27rem;
-  border-style: solid;
-  border-radius: 100%;
-  animation: fln__circle-load__spin 0.8s infinite linear;
-}
-
-.fln__pr-text {
-  padding-right: 0.45rem;
-}
-
-.fln__clear {
-  clear: both;
-}
-
-.fln__relative {
-  position: relative;
-}
-
-.fln__strong {
-  font-weight: 600;
-}
-
 #ace-toast-wrapper {
   z-index: var(--z-toast);
 }
-
-@keyframes fln__circle-load__spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(359deg);
-  }
-}
-
-@keyframes fln__fade-in {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes fln__fade-in-from-above {
-  0% {
-    opacity: 0;
-    transform: translateY(-9rem);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fln__fade-out-and-slide-up {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-9rem);
-  }
-}
-
-@keyframes fln__subtle-fade-in-from-above {
-  0% {
-    opacity: 0;
-    transform: translateY(-0.9rem);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fln__subtle-fade-out-and-slide-up {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-0.9rem);
-  }
-}
-
-
 
 .btn {
   font-size: 1.8rem;
@@ -152,6 +57,7 @@ body * {
   background-color: var(--primary-color);
   border-radius: 0.6rem;
   cursor: pointer;
+  transition: all 0.3s;
   &.lg {
     font-size: 2.1rem;
     padding: 1.5rem 4.5rem;
@@ -159,6 +65,9 @@ body * {
   &.white {
     background-color: white;
     color: rgb(74, 64, 60);
+  }
+  &:hover {
+    scale: 1.02;
   }
 }
 

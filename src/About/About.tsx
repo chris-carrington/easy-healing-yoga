@@ -1,24 +1,18 @@
 import './About.css'
 import donna from './donna.jpg'
 import { svg_lotus } from '@src/lib/svgs'
+import type { ContentMap } from '@src/lib/types'
 
 
-export function About () {
+export function About ({ content }: { content: ContentMap }) {
   return <>
     <div id="bio" class="about bg">
       {svg_lotus()}
-      <div class="title">Your Practice Begins Here with Easy Healing Yoga</div>
+      <div class="title">{content().get(20)?.content}</div>
 
       <div class="img-description">
         <img src={ donna } alt="donna" />
-
-        <div class="description">
-          <p>Donna lives in the magic of ancestral cultures, with their mysteries and spiritual traditions of Latin America and India. As an adventurer, spiritual guide and yoga therapist. Donna brings over 20 years of experience in yoga/water therapy, energy medicine, the healing arts and more.</p>
-          <p>The pages and information on my website are expanding as I figure out how to create a greater presence Online and with my evolving newsletter! Keep checking as there are many new and exciting developments and collaborations with a variety of different themes (Cosmic Astrology, Rhythm and Drumming, Creative Writing....) in my upcoming Yoga Programs and Pilgrimages to Peru, Bolivia, and Nicaragua..</p>
-          <p>Also watch for the latest updates on our Program of bringing Native American Andean Shaman and Interpreters to the North State in the late summer/early fall of 2015! Working doing our part bringing in the full realization of the Prophecy of the Eagle (North America, the Path of Technology) and the Condor (South America- Ancestral Path of the Heart). We will be offering Despacho Ceremonies and hikes up in the mountains, cultural exchange presentations, Andean textiles, healing sessions and more.</p>
-          <p>Check out my Yoga Schedule page to find out when and where I will be teaching in Redding, California for the summer and early Fall months of July, August and September, 2015.</p>
-          <p>Namaste! Enjoy!</p>
-        </div>
+        <div class="description" innerHTML={content().get(21)?.content} />
       </div>
     </div>
   </>
