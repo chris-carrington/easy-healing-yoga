@@ -1,0 +1,41 @@
+main.admin {
+  margin: 0 auto;
+  padding: 3rem 0;
+  max-width: 54rem;
+
+  form {
+    margin-bottom: 6rem;
+
+    .hide {
+      display: none;
+    }
+
+    label,
+    input,
+    textarea {
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    label {
+      font-weight: 500;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 0.6rem;
+      border: 1px solid #bebebe;
+      &:focus {
+        outline: 0;
+        border-color: transparent;
+        box-shadow: 0 0 0 .2rem rgb(155 202 252 / 90%);
+      }
+    }
+
+    textarea {
+      field-sizing: content;
+    }
+  }
+}

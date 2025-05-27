@@ -21,6 +21,5 @@ export const config = {
 
 /** 
  * @typedef {Object} SessionData
- * @property {string} userId
- * @property {string} sessionId
+ * @property {boolean} isAdmin
  */

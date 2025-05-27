@@ -17,11 +17,13 @@ import { Route, Router, type RouteSectionProps } from '@solidjs/router'
 
 
 
-import  route1 from '@src/app/Index'
+import  route1 from '@src/app/Admin/Admin'
+import  route2 from '@src/app/Index'
 
 
 export const routes = {
-  '/': route1
+  '/admin': route1,
+  '/': route2
 }
 
 
@@ -69,7 +71,8 @@ export function createApp(wrappers: ParentComponent<any>[] = [FEContextProvider,
     return <>
       <Router root={Root}>
         <FileRoutes />
-        <Route path="/" component={() => routeComponent(route1)} matchFilters={route1.values.filters} />
+        <Route path="/admin" component={() => routeComponent(route1)} matchFilters={route1.values.filters} />
+        <Route path="/" component={() => routeComponent(route2)} matchFilters={route2.values.filters} />
       </Router>
     </>
   }

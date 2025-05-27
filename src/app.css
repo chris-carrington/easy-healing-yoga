@@ -31,7 +31,8 @@ html {
   font-size: 62.5%; /* https://stackoverflow.com/questions/59920538 */
 }
 
-body {
+body,
+textarea {
   font-size: 1.86rem;
   line-height: 1.369;
   color: var(--text-color);
