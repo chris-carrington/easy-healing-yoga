@@ -1,2 +1,7 @@
 name="easy-healing-yoga"
 compatibility_date="2025-05-05"
+
+routes = [
+  { pattern = "healthandwellnessadventureretreats.com", zone_id = "e2a57d57e960b02f60cf794b608281f7", custom_domain = true }
+]
+
