@@ -1,5 +1,5 @@
 import './Nav.css'
-import logo from './logo.png'
+import logo from './logo.webp'
 import { svg_menu, svg_close } from '@src/lib/svgs'
 import { createSignal, For, type Accessor } from 'solid-js'
 import { Tabs, setActiveByHash, setActiveByTabIndex, HashTab } from '@ace/tabs'

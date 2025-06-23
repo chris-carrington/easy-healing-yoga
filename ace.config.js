@@ -9,7 +9,7 @@ export const config = {
   sessionDataTTL: 1000 * 60 * 60 * 24 * 3, // 3 days in ms
   envs: [
     { name: 'local', url: 'http://localhost:3000' },
-    { name: 'prod', url: 'https://transactency-corp.andrew-5a5.workers.dev' },
+    { name: 'prod', url: 'https://easy-healing-yoga.jquery-ssr.workers.dev' },
   ],
   plugins: {
     solid: true,

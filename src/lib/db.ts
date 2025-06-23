@@ -1,13 +1,21 @@
 import { env } from 'node:process'
-import { createClient } from '@libsql/client'
+import { createClient, type Config, type Client } from '@libsql/client'
 
+/**
+ * Initializes a libsql client using provided config or environment variables
+ * @param config Optional config overrides. `url` and `authToken` can be passed here or through environment variables
+ * @throws Error if neither config.url nor env.TURSO_DATABASE_URL is set, or neither config.authToken nor env.TURSO_AUTH_TOKEN is set
+ */
+export function db(config?: Config): Client {
+  const url = config?.url || env.TURSO_DATABASE_URL
+  if (!url) throw new Error('Please provide database url via config.url or TURSO_DATABASE_URL environment variable')
 
-export function db() { // deferring access to process.env until runtime
-  if (!env.TURSO_AUTH_TOKEN) throw new Error('!process.env.TURSO_AUTH_TOKEN')
-  if (!env.TURSO_DATABASE_URL) throw new Error('!process.env.TURSO_DATABASE_URL')
+  const authToken = config?.authToken || env.TURSO_AUTH_TOKEN
+  if (!authToken) throw new Error('Please provide auth token via config.authToken or TURSO_AUTH_TOKEN environment variable')
 
   return createClient({
-    url: env.TURSO_DATABASE_URL,
-    authToken: env.TURSO_AUTH_TOKEN,
+    ...(config || {}),
+    url,
+    authToken,
   })
 }
