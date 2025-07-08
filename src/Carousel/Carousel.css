@@ -6,7 +6,6 @@
   margin: 0 auto var(--section-space) auto;
 
   .loops {
-    touch-action: pan-x pan-y;
 
     .offering {
       text-align: center;
