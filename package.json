@@ -3,15 +3,13 @@
   "type": "module",
   "scripts": {
     "dev": "ace build local && vinxi dev",
-    "build": "vinxi build",
-    "start": "vinxi start",
-    "version": "vinxi version"
+    "build": "vinxi build"
   },
   "engines": {
     "node": ">=22"
   },
   "devDependencies": {
-    "@acets-team/ace": "^0.0.14",
+    "@acets-team/ace": "^0.0.34",
     "@libsql/client": "^0.15.5",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.0",

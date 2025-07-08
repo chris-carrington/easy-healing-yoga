@@ -1,9 +1,9 @@
 import { API } from '@ace/api'
-import { getSessionData } from '@ace/session'
+import { jwtCookieGet } from '@ace/jwtCookieGet'
 
 
 export const POST = new API('/api/get-admin', 'apiGetAdmin')
   .resolve(async (be) => {
-    const sessionData = await getSessionData()
-    return be.json({ isAdmin: sessionData?.isAdmin || false })
+    const jwt = await jwtCookieGet()
+    return be.success({ isAdmin: jwt.payload?.isAdmin || false })
   })

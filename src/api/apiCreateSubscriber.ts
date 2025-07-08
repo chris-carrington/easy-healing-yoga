@@ -10,5 +10,5 @@ export const POST = new API('/api/create-subscriber', 'apiCreateSubscriber')
 
     await db().execute({ sql: 'INSERT INTO subscribers VALUES (:email)', args: body })
 
-    return be.json({ success: true })
+    return be.success('success')
   })

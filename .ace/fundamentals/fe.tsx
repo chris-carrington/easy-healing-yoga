@@ -6,12 +6,13 @@
 
 import { Bits } from '../bits'
 import { feFetch } from '../feFetch'
-import { buildURL } from '../buildURL'
+import { buildURL } from './buildURL'
+import { isServer } from 'solid-js/web'
 import { FEMessages } from '../feMessages'
 import { getFEChildren } from '../feChildren'
 import { useParams, useLocation } from '@solidjs/router'
 import { createContext, type JSX, type ParentComponent } from 'solid-js'
-import type { GET_Paths, InferParamsGET, POST_Paths, InferBodyPOST, InferParamsPOST, InferResponseGET, InferResponsePOST, URLParams, URLSearchParams } from './types'
+import type { GETPaths, GETPath2PathParams, GETPath2SearchParams, POSTPaths, POSTPath2Body, POSTPath2PathParams, GETPath2Data, POSTPath2Data, URLPathParams, URLSearchParams, RoutePath2PathParams, Routes, JsonObject, RoutePath2SearchParams, POSTPath2SearchParams } from './types'
 
 
 export let fe!: FE // the "!" tells ts: we'll assign this before it’s used but, ex: if a fe.GET() is done before the provider has run, we'll get a standard “fe is undefined” runtime error 
@@ -42,14 +43,47 @@ export const FEContextProvider: ParentComponent = (props) => {
  *     - Create / manage `bits` aka `boolean signals`
  *     - Also holds the current params & location
  */
-export class FE<T_Params extends URLParams = {}, T_Search extends URLSearchParams = {}> {
+export class FE<T_Params extends URLPathParams = {}, T_Search extends URLSearchParams = {}> {
   bits = new Bits()
   messages = new FEMessages()
 
 
+  /**
+   * Frontend redirect w/ simple options
+   * @param path - Redirect to this path, as defined @ new Route()
+   * @param params - Params to put in the url
+   */
+  go<T_Path extends Routes>(path: T_Path, params?: { pathParams?: RoutePath2PathParams<T_Path>, searchParams?: RoutePath2SearchParams<T_Path> }) {
+    this.Go({ path, pathParams: params?.pathParams, searchParams: params?.searchParams })
+  }
+
+
+  /**
+   * Frontend redirect w/ extra options
+   * @param path - Redirect to this path, as defined @ new Route()
+   * @param params - Params to put in the url
+   * @param replace - Optional, defaults to false, when true this redirect will clear out a history stack entry 
+   * @param scroll - Optional, defaults to true, if you'd like to scroll to the top of the page when done redirecting
+   * @param state - Optional, defaults to an empty object, must be an object that is serializable, available @ the other end via `fe.getLocation().state`
+   */
+  Go<T_Path extends Routes>({ path, pathParams, searchParams, replace = false, scroll = true, state = {} }: { path: T_Path, pathParams?: RoutePath2PathParams<T_Path>, searchParams?: RoutePath2SearchParams<T_Path>, replace?: boolean, scroll?: boolean, state?: JsonObject }) {
+    if (isServer) return
+
+    const url = buildURL(path, {pathParams, searchParams})
+
+    if (replace) window.history.replaceState(state, '', url)
+    else window.history.pushState(state, '', url)
+
+    window.dispatchEvent(new PopStateEvent('popstate', { state }))
+
+    if (scroll) window.scrollTo(0, 0)
+  }
+
+
   /** @returns The url params object  */
   getParams() {
-    return useParams<T_Params>()
+    const params = useParams<T_Params>()
+    return { ...params } // params is a Proxy(Object) & this spread allows us to do for (const param in params)
   }
   
 
@@ -58,14 +92,15 @@ export class FE<T_Params extends URLParams = {}, T_Search extends URLSearchParam
     return useLocation<T_Search>()
   }
 
+
   /**
    * Call GET w/ intellisense
    * @param path - As defined @ `new API()`
    * @param options.bitKey - `Bits` are `boolean signals`, they live in a `map`, so they each have a `bitKey` to help us identify them
    * @param options.params - Path params
    */
-  async GET<T extends GET_Paths>(path: T, options?: { params?: InferParamsGET<T>, bitKey?: string }): Promise<InferResponseGET<T>> {
-    return this._fetch(buildURL(path, options?.params), {method: 'GET', bitKey: options?.bitKey })
+  async GET<T_Path extends GETPaths>(path: T_Path, options?: { pathParams?: GETPath2PathParams<T_Path>, searchParams?: GETPath2SearchParams<T_Path>, bitKey?: string }): Promise<GETPath2Data<T_Path>> {
+    return this._fetch<GETPath2Data<T_Path>>(buildURL(path, {pathParams: options?.pathParams, searchParams: options?.searchParams}), {method: 'GET', bitKey: options?.bitKey })
   }
 
 
@@ -76,15 +111,15 @@ export class FE<T_Params extends URLParams = {}, T_Search extends URLSearchParam
    * @param options.params - Path params
    * @param options.body - Request body
    */
-  async POST<T extends POST_Paths>(path: T, options?: { params?: InferParamsPOST<T>, body?: InferBodyPOST<T>, bitKey?: string }): Promise<InferResponsePOST<T>> {
-    return this._fetch(buildURL(path, options?.params), {method: 'POST', bitKey: options?.bitKey, body: options?.body })
+  async POST<T_Path extends POSTPaths>(path: T_Path, options?: { pathParams?: POSTPath2PathParams<T_Path>, searchParams?: POSTPath2SearchParams<T_Path>, body?: POSTPath2Body<T_Path>, bitKey?: string }): Promise<POSTPath2Data<T_Path>> {
+    return this._fetch<POSTPath2Data<T_Path>>(buildURL(path, {pathParams: options?.pathParams, searchParams: options?.searchParams}), {method: 'POST', bitKey: options?.bitKey, body: options?.body })
   }
 
 
-  protected async _fetch(url: string, { method, body, bitKey }: { body?: any, bitKey?: string, method: 'GET' | 'POST' }) {
+  protected async _fetch<T>(url: string, { method, body, bitKey }: { method: 'GET' | 'POST'; body?: any; bitKey?: string }): Promise<T> {
     if (bitKey) this.bits.set(bitKey, true)
 
-    const res = await feFetch(url, method, body)
+    const res = await feFetch<T>(url, method, body)
 
     this.messages.align(res)
 
@@ -92,6 +127,7 @@ export class FE<T_Params extends URLParams = {}, T_Search extends URLSearchParam
 
     return res
   }
+
 
   /**
    * - Get the children for a layout

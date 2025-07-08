@@ -1,24 +1,26 @@
 /**
  * 🧚‍♀️ How to access:
  *     - import { API } from '@ace/api'
- *     - import type { APIOptions } from '@ace/api'
+ *     - import type { APIResolveFunction } from '@ace/api'
  */
 
 
 import type { BE } from './be'
 import { pathnameToPattern } from './pathnameToPattern'
-import type { APIBody, URLSearchParams, URLParams, B4 } from './types'
+import type { APIBody, URLSearchParams, URLPathParams, B4, AceResponse, AceResponse2PrunedResponse, ValidateSchema } from './types'
 
 
 
 /** - Create a GET or POST, API endpoint */
-export class API<T_Params extends APIBody = {}, T_Search extends URLSearchParams = {}, T_Body extends URLParams = {}, T_Response extends any | unknown = unknown> {
+export class API<T_Params extends URLPathParams = any, T_Search extends URLSearchParams = any, T_Body extends URLPathParams = {}, T_Response = unknown> {
   public readonly values: {
     path: string
     pattern: RegExp
     b4?: B4
     resolve?: APIResolveFunction<T_Params, T_Search, T_Body, T_Response>,
     fn?: string
+    pathParamsSchema?: ValidateSchema<any>
+    searchParamsSchema?: ValidateSchema<any>
   }
 
   constructor(path: string, fnName?: string) {
@@ -41,18 +43,16 @@ export class API<T_Params extends APIBody = {}, T_Search extends URLSearchParams
    *     - Do a redirect
    *     - Return nothing and allow api fn to to process next
    * - 🚨 If returning the response must be a `Response` object b/c this is what is given to the client
-   * - 🚨 When calling `go()` from w/in a `b4` a return type is required, b/c ts needs to know about all api's when we call `go()` to provide autocomplete but we are defining an api while calling `go()`. So the return type stops the loop of defining & searching
    * @example
     ```ts
     import { API } from '@ace/api'
     import { authB4 } from '@src/lib/b4'
-    import { M_Contract } from '@src/db/M_Contract'
 
     export const GET = new API('/api/contract/:contractId')
       .b4(authB4)
       .params<{contractId: string}>()
       .resolve(async (be) => {
-        return be.json({ params: be.getParams() })
+        return be.success(be.getParams())
       })
     ```
    */
@@ -68,44 +68,20 @@ export class API<T_Params extends APIBody = {}, T_Search extends URLSearchParams
     ```ts
     import { API } from '@ace/api'
     import { authB4 } from '@src/lib/b4'
-    import { M_Contract } from '@src/db/M_Contract'
 
-    export const GET = new API('/api/contract/:contractId')
+    export const GET = new API('/api/contract/:contractId', 'apiContract')
       .b4(authB4)
       .params<{contractId: string}>()
       .resolve(async (be) => {
-        return be.json({ params: be.getParams() })
+        return be.success(be.getParams())
       })
     ```
-    */
-    resolve<T_Resolve_Fn extends APIResolveFunction<T_Params, T_Search, T_Body, any>>(resolveFunction: T_Resolve_Fn): API<T_Params, T_Search, T_Body, Awaited<ReturnType<T_Resolve_Fn>>> {
-      (this.values as any).resolve = resolveFunction as any // bind values
-
-      return this as unknown as API<
-        T_Params,
-        T_Search,
-        T_Body,
-        Awaited<ReturnType<T_Resolve_Fn>>
-      >
-    }
-
-
-  /**
-   * ### Set the type for the url params
-   * - If `.params()` is below `.resolve() `then `.resolve()` won't have typesafety
-   * @example
-    ```ts
-    export const GET = new API('/api/fortune/:id')]
-      .params<{ id: number }>()
-      .resolve(async (be) => {
-        const params = be.getParams()
-        return be.json({ params })
-      })
-    ```
-   */
-  params<T_New_Params extends URLParams>(): API<T_New_Params, T_Search, T_Body, T_Response> {
+  */
+  resolve<T_Resolve_Fn extends (be: BE<T_Params, T_Search, T_Body>) => Promise<AceResponse<any>>>(resolveFunction: T_Resolve_Fn): API<T_Params, T_Search, T_Body, AceResponse2PrunedResponse<Awaited<ReturnType<T_Resolve_Fn>>>> {
+    this.values.resolve = resolveFunction
     return this as any
   }
+
 
 
   /**
@@ -119,7 +95,7 @@ export class API<T_Params extends APIBody = {}, T_Search extends URLSearchParams
     import { createIndividualSchema, CreateIndividualSchema } from '@src/schemas/CreateIndividualSchema'
 
 
-    export const POST = new API('/api/create-individual')
+    export const POST = new API('/api/create-individual', 'apiCreateIndividual')
       .b4(authB4)
       .body<CreateIndividualSchema>()
       .resolve(async (be) => {
@@ -127,7 +103,7 @@ export class API<T_Params extends APIBody = {}, T_Search extends URLSearchParams
 
         const {userId} = await parseSessionData()
 
-        return be.json({ userId, body })
+        return be.success({ userId, body })
       })
     ```
    */
@@ -139,12 +115,23 @@ export class API<T_Params extends APIBody = {}, T_Search extends URLSearchParams
   search<T_New_Search extends URLSearchParams>(): API<T_Params, T_New_Search, T_Body, T_Response> {
     return this as any
   }
+
+
+  pathParams<NewParams extends URLPathParams>(schema: ValidateSchema<NewParams>): API<NewParams, T_Search> {
+    this.values.pathParamsSchema = schema
+    return this as unknown as API<NewParams, T_Search>
+  }
+
+  searchParams<NewSearch extends URLSearchParams>(schema: ValidateSchema<NewSearch>): API<T_Params, NewSearch> {
+    this.values.searchParamsSchema = schema
+    return this as unknown as API<T_Params, NewSearch>
+  }
 }
 
 
 export type APIResolveFunction<
-  T_Params extends URLParams,
+  T_Params extends URLPathParams,
   T_Search extends URLSearchParams,
   T_Body extends APIBody,
-  T_Fn_Response
-> = (be: BE<T_Params, T_Search, T_Body>) => Promise<T_Fn_Response>
+  T_Response_Data
+> = (be: BE<T_Params,T_Search,T_Body>) => Promise<AceResponse<T_Response_Data>>

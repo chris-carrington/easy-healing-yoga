@@ -1,23 +1,23 @@
 import { API } from '@ace/api'
 import { env } from 'node:process'
-import { setSessionData } from '@ace/session'
+import type { JWTPayload } from 'ace.config'
+import { ttlDay } from '@ace/jwtCreate'
+import { jwtCookieSet } from '@ace/jwtCookieSet'
 import { updateAdminSchema, type UpdateAdminSchema } from '@src/schemas/UpdateAdminSchema'
 
 
 export const POST = new API('/api/update-admin', 'apiUpdateAdmin')
   .body<UpdateAdminSchema>()
   .resolve(async (be) => {
-    let success: undefined | boolean
-
-    if (!env.AUTH_PASSWORD) throw new Error('!process.env.AUTH_PASSWORD')
+    if (!env.AUTH_PASSWORD) return be.error('!process.env.AUTH_PASSWORD')
 
     const body = updateAdminSchema.parse(await be.getBody())
 
-    if (String(body.password) !== env.AUTH_PASSWORD) success = false
-    else {
-      success = true
-      await setSessionData({ isAdmin: true })
-    }
+    if (body.password !== Number(env.AUTH_PASSWORD)) return be.error('Invalid authentication')
 
-    return be.json({ success })
+    const payload: JWTPayload = { isAdmin: true }
+
+    await jwtCookieSet({ jwtCreateProps: {ttl: ttlDay, payload} })
+
+    return be.success('success')
   })

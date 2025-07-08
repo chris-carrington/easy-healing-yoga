@@ -6,14 +6,70 @@
 
 
 import { routes } from './createApp'
-import type { Routes } from './types'
-import { buildURL } from '../buildURL'
+import { buildURL } from './buildURL'
 import { useLocation } from '@solidjs/router'
 import { pathnameToMatch } from '../pathnameToMatch'
+import type { Routes, RoutePath2PathParams, RoutePath2SearchParams } from './types'
 import { createSignal, createEffect, onMount, For, Show, type JSX } from 'solid-js'
 
 
-export function Tabs({ tabs, name, mode = 'content', variant = 'underline', scrollMargin = 0, ...requestedProps }: TabsProps) {
+/**
+ * ### Show lovely tabs
+ * Add to `app.tsx` => `import '@ace/tabs.styles.css'` & then:
+ * @example
+  ```tsx
+  <Tabs
+    mode="route"
+    variant="pill"
+    tabs={[
+      new RouteTab('Home', '/'),
+      new RouteTab('About', '/about'),
+      new RouteTab('Members', '/members'),
+    ]}
+  />
+  ```
+ * @example
+  ```tsx
+  <Tabs
+    name="nav"
+    mode="scroll"
+    variant="underline"
+    scrollMargin={74}
+    tabs={[
+      new HashTab('Home', '#banner'),
+      new HashTab('Offerings', '#carousel'),
+      new HashTab('Spiritual Retreats', '#retreats'),
+    ]}
+  />
+  ```
+ * @example
+  ```tsx
+  <Tabs
+    mode="content"
+    variant="classic"
+    tabs={[
+      new ContentTab('Tab 1', <>Tab 1</>),
+      new ContentTab('Tab 2', <>Tab 2</>),
+      new ContentTab('Tab 3', <>Tab 3</>),
+    ]}
+  />
+  ```
+ *
+ * @example
+  ```ts
+  setActiveByTabIndex('nav', 2)
+  setActiveByPath('route', '/')
+  setActiveByHash('hash', '#bio')
+  ```
+ * 
+ * @param props.tabs - An array of `RouteTab`, `HashTab` or `ContentTab` objects. Place the Tabs component in a layout when using a mode of `route` to keep the animation smooth between routes
+ * @param props.name - Name is helpful when you have multiple tabs on the same page and want to use `setActiveByTabIndex()`, `setActiveByPath()` or `setActiveByHash()`
+ * @param props.mode - `content` requires each tab to be a `ContentTab` and shows different content based on which tab is selected. `scroll` requires each tab to be a `HashTab` and scrolls to different content based on which tab is selected. `route` requires each tab to be a `RouteTab` and navigates to different pages based on which tab is selected.
+ * @param props.variant - `underline` is google style, `classic` is bootstrap style, and `pill` looks like rounded buttons
+ * @param props.scrollMargin - If `props.mode` is `scroll` set `scrollMargin` if you'd love the scroll to end some pixels above the scrolled to item
+ * @param props.tabsProps - Set if you'd love to add your own props to the tabs html div element like class, style or id
+ */
+export function Tabs({ tabs, name, mode = 'content', variant = 'underline', scrollMargin = 0, tabsProps }: TabsProps) {
   const location = useLocation()
 
   const pathToTabIndex = new Map<Routes, number>()
@@ -23,7 +79,7 @@ export function Tabs({ tabs, name, mode = 'content', variant = 'underline', scro
   let foundContentInitial = false
 
   tabs.forEach((tab, i) => {
-    if (tab instanceof RouteTab) pathToTabIndex.set(tab.route, i)
+    if (tab instanceof RouteTab) pathToTabIndex.set(tab.path, i)
     else if (tab instanceof HashTab) hashToTabIndex.set(tab.hash, i)
     else if (tab instanceof ContentTab && tab.isInitiallyActive && !foundContentInitial) {
       initialContentIndex = i
@@ -123,7 +179,7 @@ export function Tabs({ tabs, name, mode = 'content', variant = 'underline', scro
     }
   }
 
-  function onTabClick(i: number, tab: RouteTab | HashTab | ContentTab, ev?: MouseEvent) {
+  function onTabClick(i: number, tab: RouteTab<any> | HashTab | ContentTab, ev?: MouseEvent) {
     if (mode === 'content' || mode === 'route') setActive(i)
     else if (mode === 'scroll' && tab instanceof HashTab) {
       ev?.preventDefault()
@@ -196,7 +252,7 @@ export function Tabs({ tabs, name, mode = 'content', variant = 'underline', scro
 
   return <>
     <div class={`ace-tabs ${variant}`}>
-      <div class="tabs" ref={divTabs} {...accessibilityProps} {...requestedProps}>
+      <div class="tabs" ref={divTabs} {...accessibilityProps} {...tabsProps}>
         <For each={tabs}>
           {(tab, i) => {
             const isActive = () => i() === active()
@@ -204,7 +260,7 @@ export function Tabs({ tabs, name, mode = 'content', variant = 'underline', scro
             return <>
               { tab instanceof HashTab && <a href={tab.hash} class={`tab ${isActive() ? 'active' : ''}`} aria-current={isActive() ? 'page' : undefined} onClick={ev => onTabClick(i(), tab, ev)}>{tab.label}</a> }
 
-              { tab instanceof RouteTab && <a href={buildURL((tab as RouteTab).route, (tab as RouteTab).params)} class={`tab ${isActive() ? 'active' : ''}`} onClick={ev => onTabClick(i(), tab, ev)} > {tab.label} </a> }
+              { tab instanceof RouteTab && <a href={buildURL((tab as RouteTab<any>).path, {pathParams: (tab as RouteTab<any>).pathParams, searchParams: (tab as RouteTab<any>).searchParams})} class={`tab ${isActive() ? 'active' : ''}`} onClick={ev => onTabClick(i(), tab, ev)} > {tab.label} </a> }
 
               { tab instanceof ContentTab && <div id={`tab-${i()}`} role="tab" tabindex={isActive() ? 0 : -1} aria-selected={isActive()} aria-controls={`tab-content-${i()}`} class={`tab ${isActive() ? 'active' : ''}`} onClick={() => onTabClick(i(), tab)} > {tab.label} </div> }
             </>
@@ -236,35 +292,52 @@ const indexToOnTabClick = new Map<string, (i: number) => void>()
 const pathToOnTabClick = new Map<string, (route: Routes) => void>()
 const hashToOnTabClick = new Map<string, (hash: string) => void>()
 
-
+/**
+ * Helpful when you have another button that you'd love to set the active tab and you want to identify your tab by index
+ * @param name - Name is helpful when you have multiple tabs on the same page and want to identify what set of tabs you'd love to set
+ * @param i - The tab index you'd love to set
+ */
 export function setActiveByTabIndex(name: string, i: number) {
   indexToOnTabClick.get(name)?.(i)
 }
 
 
+/**
+ * Helpful when you have another button that you'd love to set the active tab and you want to identify your tab by a string route path, you can also use an <A /> which is probably ideal b/c then it'd be screen reader compliant
+ * @param name - Name is helpful when you have multiple tabs on the same page and want to identify what set of tabs you'd love to set
+ * @param route - The route path to navigate to
+ */
 export function setActiveByPath(name: string, route: Routes) {
   pathToOnTabClick.get(name)?.(route)
 }
 
 
+/**
+ * Helpful when you have another button that you'd love to set the active tab and you want to identify your tab by hash
+ * @param name - Name is helpful when you have multiple tabs on the same page and want to identify what set of tabs you'd love to set
+ * @param hash - The tab id hash to scroll to
+ */
 export function setActiveByHash(name: string, hash: string) {
   hashToOnTabClick.get(name)?.(hash)
 }
 
-
-export class RouteTab {
+/** Used when the mode is `route` */
+export class RouteTab<T_Path extends Routes> {
   label: string
-  route: Routes
-  params?: any
+  path: T_Path
+  pathParams?: RoutePath2PathParams<T_Path>
+  searchParams?: RoutePath2SearchParams<T_Path>
 
-  constructor(label: string, route: Routes, params?: any) {
+  constructor(label: string, route: T_Path, params?: { pathParams?: RoutePath2PathParams<T_Path>, searchParams?: RoutePath2SearchParams<T_Path> }) {
     this.label = label
-    this.route = route
-    this.params = params
+    this.path = route
+    this.pathParams = params?.pathParams
+    this.pathParams = params?.searchParams
   }
 }
 
 
+/** Used when the mode is `scroll` */
 export class HashTab {
   label: string
   hash: string
@@ -276,6 +349,7 @@ export class HashTab {
 }
 
 
+/** Used when the mode is `content` */
 export class ContentTab {
   label: string
   content: JSX.Element
@@ -290,12 +364,19 @@ export class ContentTab {
 
 
 export type TabsProps = {
+  /** An array of `RouteTab`, `HashTab` or `ContentTab` objects. Place the Tabs component in a layout when using a mode of `route` to keep the animation smooth between routes */
   tabs: Tabs
+  /** Name is helpful when you have multiple tabs on the same page and want to use `setActiveByTabIndex()`, `setActiveByPath()` or `setActiveByHash()` */
   name?: string
+  /** `content` requires each tab to be a `ContentTab` and shows different content based on which tab is selected. `scroll` requires each tab to be a `HashTab` and scrolls to different content based on which tab is selected. `route` requires each tab to be a `RouteTab` and navigates to different pages based on which tab is selected. */
   mode: 'content' | 'scroll' | 'route'
+  /** `underline` is google style, `classic` is bootstrap style, and `pill` looks like rounded buttons */
   variant: 'underline' | 'pill' | 'classic'
+  /** If `props.mode` is `scroll` set `scrollMargin` if you'd love the scroll to end some pixels above the scrolled to item */
   scrollMargin?: number
-} & JSX.HTMLAttributes<HTMLDivElement>
+  /** Set if you'd love to add your own props to the tabs html div element like class, style or id */
+  tabsProps?: JSX.HTMLAttributes<HTMLDivElement>
+}
 
 
-export type Tabs = RouteTab[] | HashTab[] | ContentTab[]
+export type Tabs = RouteTab<any>[] | HashTab[] | ContentTab[]

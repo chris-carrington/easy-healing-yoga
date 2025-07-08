@@ -10,5 +10,5 @@ export const POST = new API('/api/update-content', 'apiUpdateContent')
 
     await db().execute({ sql: 'UPDATE content SET content = (:content) WHERE id = (:id)', args: body })
 
-    return be.json({ success: true })
+    return be.success('success')
   })

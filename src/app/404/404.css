@@ -1,0 +1,31 @@
+main.not-found {
+  text-align: center;
+  margin-top: var(--space);
+
+  .main-content {
+    min-height: 69vh;
+    padding-top: 9rem;
+  }
+
+  .code,
+  .message {
+    margin-bottom: var(--space-lite);
+  }
+
+  .code {
+    font-size: 6rem;
+    font-weight: 700;
+  }
+
+  .message {
+    opacity: 0.81;
+  }
+
+  .path {
+    font-family: monospace;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.27rem 0.6em;
+    border-radius: 0.6rem;
+    margin-bottom: var(--space);
+  }
+}

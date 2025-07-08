@@ -1,11 +1,11 @@
 import { createAPIFunction } from './createAPIFunction' 
 
-import  * as POST1 from '@src/api/apiCreateSubscriber'
-import  * as POST2 from '@src/api/apiGetAdmin'
-import  * as POST3 from '@src/api/apiGetContent'
-import  * as POST4 from '@src/api/apiGetSubscribers'
-import  * as POST5 from '@src/api/apiUpdateAdmin'
-import  * as POST6 from '@src/api/apiUpdateContent'
+import * as POST1 from '@src/api/apiCreateSubscriber'
+import * as POST2 from '@src/api/apiGetAdmin'
+import * as POST3 from '@src/api/apiGetContent'
+import * as POST4 from '@src/api/apiGetSubscribers'
+import * as POST5 from '@src/api/apiUpdateAdmin'
+import * as POST6 from '@src/api/apiUpdateContent'
 
 
 export const gets = {
@@ -20,6 +20,15 @@ export const posts = {
   '/api/get-subscribers': POST4.POST,
   '/api/update-admin': POST5.POST,
   '/api/update-content': POST6.POST,
+}
+
+export const apiNames = {
+  'apiCreateSubscriber': POST1.POST,
+  'apiGetAdmin': POST2.POST,
+  'apiGetContent': POST3.POST,
+  'apiGetSubscribers': POST4.POST,
+  'apiUpdateAdmin': POST5.POST,
+  'apiUpdateContent': POST6.POST,
 }
 
 export const apiCreateSubscriber = createAPIFunction(POST1.POST)
