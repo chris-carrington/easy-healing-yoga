@@ -41,17 +41,18 @@
     display: flex;
     flex-direction: column;
     gap: 1.8rem;
-    align-items: center;
     
     @media only screen and (min-width: 810px) { /* big screen */
       flex-direction: row;
     }
 
     img {
-      width: 27rem;
-      transform: translateY(27px);
+      width: 100%;
+      transform: translateY(6px);
+      border-radius: 0.9rem;
 
       @media only screen and (min-width: 810px) { /* big screen */
+        width: 27rem;
         align-self: flex-start;
         width: auto;
       }
