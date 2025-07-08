@@ -5,4 +5,4 @@
 
 
 export const env: 'local' | 'prod' = 'local'
-export const url: 'http://localhost:3000' | 'https://easy-healing-yoga.jquery-ssr.workers.dev' = 'http://localhost:3000'
+export const url: 'http://localhost:3000' | 'https://healthandwellnessadventureretreats.com' = 'http://localhost:3000'

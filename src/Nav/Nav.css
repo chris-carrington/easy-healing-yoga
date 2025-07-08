@@ -10,11 +10,16 @@
   align-items: center;
   justify-content: space-between;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px 0px;
+  height: 6.8rem;
 
   .logo-btn {
     border: none;
     cursor: pointer;
     background: transparent;
+
+    img {
+      width: 100%;
+    }
   }
 
   .menu {

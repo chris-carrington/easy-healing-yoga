@@ -1,11 +1,12 @@
 #banner {
   margin: 7rem 0 var(--section-space) 0;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   z-index: var(--z-banner-wrapper);
 
   .img {
     width: 100vw;
+    overflow: hidden;
     &:before {
       content: '';
       position: absolute;

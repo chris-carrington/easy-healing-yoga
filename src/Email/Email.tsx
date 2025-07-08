@@ -19,7 +19,7 @@ export function Email({ content }: { content: ContentMap }) {
     <div id="newsletter" class="bg">
       <div class="title" innerHTML={content().get(27)?.content}/>
       <form onSubmit={onSubmit}>
-        <input name="email" type="email" placeholder="Please enter email address" />
+        <input name="email" type="email" placeholder="Please enter email" />
         <Submit label="Sign Up" class="btn white" bitKey="save" />
       </form>
       <Messages name="email" />
